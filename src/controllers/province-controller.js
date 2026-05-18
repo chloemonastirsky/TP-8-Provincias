@@ -57,4 +57,5 @@ export default class ProvinceRepository {
      }
     updateAsync = async (entity) => { /* hacerlo */ }
     deleteByIdAsync = async (id) => { /* hacerlo */ }
+    //trabajar con dotenv despues de terminar estas ultimas dos funciones
 }
