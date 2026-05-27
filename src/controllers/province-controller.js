@@ -58,8 +58,8 @@ export default class ProvinceRepository {
     updateAsync = async (entity) => { 
         let entity = null;
         const client = new Client(DBConfig);
-
-            await client.connect();
+        try{
+             await client.connect();
 
             const sql = 'UPDATE Provincias (id, nombre, nombrecompleto, latitud, longitud, displayorder) SET nombre = $1, nombrecompleto = $2 ,latitud = $3, longitud = $4, displayorder = $5 WHERE id = $6';
             const values = [
@@ -74,6 +74,28 @@ export default class ProvinceRepository {
 
             await client.end();
             return result.rowCount;
+        }
+           catch{
+            console.log(error);
+           }
          }
-    deleteByIdAsync = async (id) => { /* hacerlo */ }
+    
+    
+         deleteByIdAsync = async (id) => { 
+            try{
+                let entity = null;
+            const client = new Client(DBConfig);
+
+            await client.connect();
+
+            const sql = 'DELETE * from Provincias WHERE id=$1';
+            const values = [id]
+            const result = await client.query(sql,values);
+
+            await client.end();
+            }catch{
+                console.log(error);
+            }
+        
+          }
 }
