@@ -55,7 +55,25 @@ export default class ProvinceRepository {
 
             await client.end();
      }
-    updateAsync = async (entity) => { /* hacerlo */ }
+    updateAsync = async (entity) => { 
+        let entity = null;
+        const client = new Client(DBConfig);
+
+            await client.connect();
+
+            const sql = 'UPDATE Provincias (id, nombre, nombrecompleto, latitud, longitud, displayorder) SET nombre = $1, nombrecompleto = $2 ,latitud = $3, longitud = $4, displayorder = $5 WHERE id = $6';
+            const values = [
+            entity.nombre,
+            entity.nombrecompleto,
+            entity.latitud,
+            entity.longitud,
+            entity.displayorder,
+            entity.id
+        ];
+            const result = await client.query(sql,values);
+
+            await client.end();
+            return result.rowCount;
+         }
     deleteByIdAsync = async (id) => { /* hacerlo */ }
-    //trabajar con dotenv despues de terminar estas ultimas dos funciones
 }
