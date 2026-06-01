@@ -1,8 +1,22 @@
-import DBConfig from "../config/db-config.js";
+import DBConfig from "../../config/db-config.js";
 import pg from "pg";
 const { Client } = pg;
 
 export default class ProvinceRepository {
+     constructor() {
+        // Se ejecuta siempre, (al instanciar la clase)
+        console.log('Estoy en: ProvinceRepository.constructor()');
+        this.DBPool = null;
+    }
+
+    getDBPool = () => {
+        if (this.DBPool == null){
+            this.DBPool = new Pool(config);
+        }
+        return this.DBPool;
+    }
+
+    
     getAllAsync = async () => {
         const client = new Client(DBConfig);
 
@@ -21,7 +35,6 @@ export default class ProvinceRepository {
 
     getByIdAsync = async (id) => {
         const client = new Client(DBConfig);
-
         try {
             await client.connect();
             const sql = "SELECT * FROM provincias WHERE id = $1";
@@ -36,22 +49,25 @@ export default class ProvinceRepository {
         }
     };
 
+    
     createAsync = async (entity) => {
         const client = new Client(DBConfig);
+        console.log(`ProvinceRepository.createAsync(${JSON.stringify(entity)})`);
+        let newId = 25;
 
         try {
             await client.connect();
-            const sql = "INSERT INTO provincias (id, nombre, nombrecompleto, latitud, longitud, displayorder) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *";
+            const sql = "INSERT INTO provincias (nombre, nombrecompleto, latitud, longitud, displayorder) VALUES ($1, $2, $3, $4, $5) RETURNING *";
             const values = [
-                entity.id,
                 entity.nombre,
                 entity.nombrecompleto,
                 entity.latitud,
                 entity.longitud,
                 entity.displayorder,
             ];
-            const result = await client.query(sql, values);
-            return result.rows[0];
+            const resultPg = await client.query(sql, values);
+            newId = resultPg.rows[0].id;
+            return resultPg.rows[0]; // Devuelve la provincia creada con su ID generado por la DB
         } catch (error) {
             console.error(error);
             throw new Error("Error al crear la provincia en la base de datos.");

@@ -13,9 +13,12 @@ class ProvinceService {
         return await this.repository.getByIdAsync(id);
     }
 
-    async createAsync(data) {
-        return await this.repository.createAsync(data);
+    async createAsync(entity) {
+        console.log(`ProvinceService.createAsync(${JSON.stringify(entity)})`);
+        const rowsAffected = await this.repository.createAsync(entity);
+        return rowsAffected;
     }
+
 
     async updateAsync(id, data) {
         return await this.repository.updateAsync(id, data);
