@@ -19,8 +19,6 @@ const swaggerFile = JSON.parse(fs.readFileSync(path.join(__dirname, "swagger-out
 app.use(cors());        // Middleware de CORS.
 app.use(express.json()) // Middleware para parsear y comprender JSON.
 
-// Configurar Swagger UI
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 //
 // Endpoints (todos los Routers)
@@ -30,6 +28,10 @@ app.use("/api/province", ProvinceRouter);
 //
 // Inicio el Server y lo pongo a escuchar.
 //
+
+// Configurar Swagger UI
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })

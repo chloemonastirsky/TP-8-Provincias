@@ -7,7 +7,7 @@ const doc = {
     version: '1.0.0',
   },
   host: 'localhost:3000',
-  basePath: '/api',
+  basePath: '/',
   schemes: ['http'],
   consumes: ['application/json'],
   produces: ['application/json'],
@@ -29,7 +29,7 @@ const doc = {
 };
 
 const outputFile = './swagger-output.json';
-const endpointsFiles = ['./index.js'];
+const endpointsFiles = ['./src/controllers/province-controller.js'];
 
 swaggerAutogen(outputFile, endpointsFiles, doc);
 

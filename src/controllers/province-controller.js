@@ -8,7 +8,7 @@ const service = new ProvinceService();
  * #swagger.tags = ['Provinces']
  * #swagger.summary = 'Obtener todas las provincias'
  * #swagger.description = 'Retorna un listado completo de todas las provincias registradas'
- * #swagger.responses[200] = { description: 'Lista de provincias obtenida correctamente' }
+ * #swagger.responses[400] = { description: 'Lista holaaaaaaa' }
  * #swagger.responses[500] = { description: 'Error interno del servidor' }
  */
 router.get("/", async (req, res) => {

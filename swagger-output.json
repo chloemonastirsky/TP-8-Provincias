@@ -6,7 +6,7 @@
     "version": "1.0.0"
   },
   "host": "localhost:3000",
-  "basePath": "/api",
+  "basePath": "/",
   "schemes": [
     "http"
   ],
@@ -17,7 +17,7 @@
     "application/json"
   ],
   "paths": {
-    "/api/province/": {
+    "/": {
       "get": {
         "description": "",
         "responses": {
@@ -41,7 +41,7 @@
         }
       }
     },
-    "/api/province/{id}": {
+    "/{id}": {
       "get": {
         "description": "",
         "parameters": [
