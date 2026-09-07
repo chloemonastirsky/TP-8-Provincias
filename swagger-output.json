@@ -5,8 +5,8 @@
     "description": "API REST para gestionar provincias",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
-  "basePath": "/",
+  "host": "localhost:4000",
+  "basePath": "/api/province",
   "schemes": [
     "http"
   ],
@@ -134,7 +134,7 @@
                 }
               }
             },
-            "name": {
+            "nombre": {
               "type": "object",
               "properties": {
                 "type": {
@@ -146,7 +146,72 @@
                   "example": "Buenos Aires"
                 }
               }
+            },
+            "nombrecompleto": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "example": {
+                  "type": "string",
+                  "example": "Provincia de Buenos Aires"
+                }
+              }
+            },
+            "latitud": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "number"
+                },
+                "example": {
+                  "type": "number",
+                  "example": -34.6037
+                }
+              }
+            },
+            "longitud": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "number"
+                },
+                "example": {
+                  "type": "number",
+                  "example": -58.3816
+                }
+              }
+            },
+            "displayorder": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "example": {
+                  "type": "number",
+                  "example": 1
+                }
+              }
             }
+          }
+        },
+        "required": {
+          "type": "array",
+          "example": [
+            "nombre",
+            "nombrecompleto",
+            "latitud",
+            "longitud",
+            "displayorder"
+          ],
+          "items": {
+            "type": "string"
           }
         }
       }

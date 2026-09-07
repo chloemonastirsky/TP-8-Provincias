@@ -53,9 +53,9 @@ router.get("/:id", async (req, res) => {
  */
 router.post("/", async (req, res) => {
 
-    console.log("BODY:", req.query);
+    console.log("BODY:", req.body);
     try {
-        const result = await service.createAsync(req.query);
+        const result = await service.createAsync(req.body);
         res.status(201).json(result);
     } catch (error) {
         console.error(error);
@@ -75,7 +75,7 @@ router.post("/", async (req, res) => {
  */
 router.put("/:id", async (req, res) => {
     try {
-        const updated = await service.updateAsync(req.params.id, req.query);
+        const updated = await service.updateAsync(req.params.id, req.body);
         if (!updated) {
             return res.status(404).json({ error: "Provincia no encontrada para actualizar." });
         }

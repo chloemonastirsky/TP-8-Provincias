@@ -6,8 +6,8 @@ const doc = {
     description: 'API REST para gestionar provincias',
     version: '1.0.0',
   },
-  host: 'localhost:3000',
-  basePath: '/',
+  host: 'localhost:4000',
+  basePath: '/api/province',
   schemes: ['http'],
   consumes: ['application/json'],
   produces: ['application/json'],
@@ -19,17 +19,34 @@ const doc = {
           type: 'integer',
           example: 1,
         },
-        name: {
+        nombre: {
           type: 'string',
           example: 'Buenos Aires',
         },
+        nombrecompleto: {
+          type: 'string',
+          example: 'Provincia de Buenos Aires',
+        },
+        latitud: {
+          type: 'number',
+          example: -34.6037,
+        },
+        longitud: {
+          type: 'number',
+          example: -58.3816,
+        },
+        displayorder: {
+          type: 'integer',
+          example: 1,
+        },
       },
+      required: ['nombre', 'nombrecompleto', 'latitud', 'longitud', 'displayorder'],
     },
   },
 };
 
 const outputFile = './swagger-output.json';
-const endpointsFiles = ['./src/controllers/province-controller.js'];
+const endpointsFiles = ['index.js', './src/controllers/province-controller.js'];
 
 swaggerAutogen(outputFile, endpointsFiles, doc);
 

@@ -10,7 +10,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const port = 3000; // El puerto 3000 (http://localhost:3000)
+const port = 4000; // El puerto 3000 (http://localhost:3000)
 
 // Leer el archivo de especificación de Swagger
 const swaggerFile = JSON.parse(fs.readFileSync(path.join(__dirname, "swagger-output.json"), "utf8"));
