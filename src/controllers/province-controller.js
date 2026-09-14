@@ -43,19 +43,59 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-/**
- * #swagger.tags = ['Provinces']
- * #swagger.summary = 'Crear una nueva provincia'
- * #swagger.description = 'Crea una nueva provincia con los datos proporcionados'
- * #swagger.requestBody = { required: true, content: { "application/json": { schema: { $ref: "#/definitions/Province" } } } }
- * #swagger.responses[201] = { description: 'Provincia creada exitosamente' }
- * #swagger.responses[400] = { description: 'Error en la solicitud' }
- */
+/*
+    #swagger.tags = ['Provinces']
+    #swagger.summary = 'Crear una nueva provincia'
+    #swagger.description = 'Crea una nueva provincia con los datos proporcionados como query parameters'
+    #swagger.parameters['nombre'] = {
+        in: 'query',
+        description: 'Nombre corto de la provincia',
+        required: true,
+        type: 'string',
+        example: 'Misiones'
+    }
+    #swagger.parameters['nombrecompleto'] = {
+        in: 'query',
+        description: 'Nombre completo de la provincia',
+        required: true,
+        type: 'string',
+        example: 'Provincia de Misiones'
+    }
+    #swagger.parameters['latitud'] = {
+        in: 'query',
+        description: 'Latitud de la provincia',
+        required: true,
+        type: 'number',
+        example: -27
+    }
+    #swagger.parameters['longitud'] = {
+        in: 'query',
+        description: 'Longitud de la provincia',
+        required: true,
+        type: 'number',
+        example: -56
+    }
+    #swagger.parameters['displayorder'] = {
+        in: 'query',
+        description: 'Orden de visualización de la provincia',
+        required: true,
+        type: 'integer',
+        example: 13
+    }
+    #swagger.responses[201] = { description: 'Provincia creada exitosamente' }
+    #swagger.responses[400] = { description: 'Error en la solicitud' }
+*/
 router.post("/", async (req, res) => {
-
     console.log("BODY:", req.body);
+    console.log("QUERY:", req.query);
+
     try {
-        const result = await service.createAsync(req.body);
+        const payload = {
+            ...req.body,
+            ...req.query,
+        };
+
+        const result = await service.createAsync(payload);
         res.status(201).json(result);
     } catch (error) {
         console.error(error);

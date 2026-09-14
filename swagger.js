@@ -1,6 +1,9 @@
-import swaggerAutogen from 'swagger-autogen';
-//http://localhost:3000/api-docs/
-const doc = {
+import fs from 'fs';
+
+// Especificación OpenAPI/Swagger generada manualmente
+// para garantizar que los parámetros del POST se muestren correctamente en la UI.
+const swaggerSpec = {
+  swagger: '2.0',
   info: {
     title: 'API de Provincias',
     description: 'API REST para gestionar provincias',
@@ -11,55 +14,168 @@ const doc = {
   schemes: ['http'],
   consumes: ['application/json'],
   produces: ['application/json'],
+  tags: [
+    {
+      name: 'Provinces',
+      description: 'Operaciones sobre provincias',
+    },
+  ],
+  paths: {
+    '/': {
+      get: {
+        tags: ['Provinces'],
+        summary: 'Obtener todas las provincias',
+        description: 'Retorna un listado completo de todas las provincias registradas',
+        responses: {
+          200: { description: 'Lista de provincias' },
+          500: { description: 'Error interno del servidor' },
+        },
+      },
+      post: {
+        tags: ['Provinces'],
+        summary: 'Crear una nueva provincia',
+        description: 'Crea una nueva provincia con los datos proporcionados como query parameters',
+        parameters: [
+          {
+            name: 'nombre',
+            in: 'query',
+            description: 'Nombre corto de la provincia',
+            required: true,
+            type: 'string',
+            default: 'Misiones',
+          },
+          {
+            name: 'nombrecompleto',
+            in: 'query',
+            description: 'Nombre completo de la provincia',
+            required: true,
+            type: 'string',
+            default: 'Provincia de Misiones',
+          },
+          {
+            name: 'latitud',
+            in: 'query',
+            description: 'Latitud de la provincia',
+            required: true,
+            type: 'number',
+            default: -27,
+          },
+          {
+            name: 'longitud',
+            in: 'query',
+            description: 'Longitud de la provincia',
+            required: true,
+            type: 'number',
+            default: -56,
+          },
+          {
+            name: 'displayorder',
+            in: 'query',
+            description: 'Orden de visualización de la provincia',
+            required: true,
+            type: 'integer',
+            default: 13,
+          },
+        ],
+        responses: {
+          201: { description: 'Provincia creada exitosamente' },
+          400: { description: 'Error en la solicitud' },
+        },
+      },
+    },
+    '/{id}': {
+      get: {
+        tags: ['Provinces'],
+        summary: 'Obtener provincia por ID',
+        description: 'Retorna los datos de una provincia específica',
+        parameters: [
+          {
+            name: 'id',
+            in: 'path',
+            description: 'ID de la provincia',
+            required: true,
+            type: 'integer',
+          },
+        ],
+        responses: {
+          200: { description: 'Provincia encontrada' },
+          404: { description: 'Provincia no encontrada' },
+          500: { description: 'Error interno del servidor' },
+        },
+      },
+      put: {
+        tags: ['Provinces'],
+        summary: 'Actualizar una provincia',
+        description: 'Actualiza los datos de una provincia existente',
+        parameters: [
+          {
+            name: 'id',
+            in: 'path',
+            description: 'ID de la provincia',
+            required: true,
+            type: 'integer',
+          },
+          {
+            name: 'body',
+            in: 'body',
+            description: 'Datos actualizados de la provincia',
+            required: true,
+            schema: { $ref: '#/definitions/ProvinceInput' },
+          },
+        ],
+        responses: {
+          200: { description: 'Provincia actualizada correctamente' },
+          400: { description: 'Error en la solicitud' },
+          404: { description: 'Provincia no encontrada' },
+        },
+      },
+      delete: {
+        tags: ['Provinces'],
+        summary: 'Eliminar una provincia',
+        description: 'Elimina una provincia existente por su ID',
+        parameters: [
+          {
+            name: 'id',
+            in: 'path',
+            description: 'ID de la provincia',
+            required: true,
+            type: 'integer',
+          },
+        ],
+        responses: {
+          200: { description: 'Provincia eliminada correctamente' },
+          404: { description: 'Provincia no encontrada' },
+          500: { description: 'Error interno del servidor' },
+        },
+      },
+    },
+  },
   definitions: {
     Province: {
       type: 'object',
-      properties: {
-        id: {
-          type: 'integer',
-          example: 1,
-        },
-        nombre: {
-          type: 'string',
-          example: 'Buenos Aires',
-        },
-        nombrecompleto: {
-          type: 'string',
-          example: 'Provincia de Buenos Aires',
-        },
-        latitud: {
-          type: 'number',
-          example: -34.6037,
-        },
-        longitud: {
-          type: 'number',
-          example: -58.3816,
-        },
-        displayorder: {
-          type: 'integer',
-          example: 1,
-        },
-      },
       required: ['nombre', 'nombrecompleto', 'latitud', 'longitud', 'displayorder'],
+      properties: {
+        id: { type: 'integer', example: 1 },
+        nombre: { type: 'string', example: 'Buenos Aires' },
+        nombrecompleto: { type: 'string', example: 'Provincia de Buenos Aires' },
+        latitud: { type: 'number', example: -34.6037 },
+        longitud: { type: 'number', example: -58.3816 },
+        displayorder: { type: 'integer', example: 1 },
+      },
+    },
+    ProvinceInput: {
+      type: 'object',
+      required: ['nombre', 'nombrecompleto', 'latitud', 'longitud', 'displayorder'],
+      properties: {
+        nombre: { type: 'string', example: 'Misiones' },
+        nombrecompleto: { type: 'string', example: 'Provincia de Misiones' },
+        latitud: { type: 'number', example: -27 },
+        longitud: { type: 'number', example: -56 },
+        displayorder: { type: 'integer', example: 13 },
+      },
     },
   },
 };
 
-const outputFile = './swagger-output.json';
-const endpointsFiles = ['index.js', './src/controllers/province-controller.js'];
-
-swaggerAutogen(outputFile, endpointsFiles, doc);
-
-
-
-// Explicación breve de la implementación de Swagger
-// Usamos dos herramientas complementarias:
-
-// 1️⃣ swagger-autogen (swagger.js)
-// Genera automáticamente la especificación OpenAPI (swagger-output.json)
-// Lee los comentarios JSDoc en tus endpoints (ej: #swagger.tags, #swagger.summary)
-// Crea un archivo JSON con toda la documentación de tu API
-// 2️⃣ swagger-ui-express (index.js)
-// Sirve la interfaz visual de Swagger
-// En la ruta /api-docs muestra la documentación interactiva
-// Lee el archivo generado por swagger-autogen
+fs.writeFileSync('./swagger-output.json', JSON.stringify(swaggerSpec, null, 2), 'utf8');
+console.log('Swagger-autogen:  Success  ');

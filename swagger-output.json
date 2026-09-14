@@ -16,95 +16,175 @@
   "produces": [
     "application/json"
   ],
+  "tags": [
+    {
+      "name": "Provinces",
+      "description": "Operaciones sobre provincias"
+    }
+  ],
   "paths": {
     "/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Provinces"
+        ],
+        "summary": "Obtener todas las provincias",
+        "description": "Retorna un listado completo de todas las provincias registradas",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Lista de provincias"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Error interno del servidor"
           }
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Provinces"
+        ],
+        "summary": "Crear una nueva provincia",
+        "description": "Crea una nueva provincia con los datos proporcionados como query parameters",
+        "parameters": [
+          {
+            "name": "nombre",
+            "in": "query",
+            "description": "Nombre corto de la provincia",
+            "required": true,
+            "type": "string",
+            "default": "Misiones"
+          },
+          {
+            "name": "nombrecompleto",
+            "in": "query",
+            "description": "Nombre completo de la provincia",
+            "required": true,
+            "type": "string",
+            "default": "Provincia de Misiones"
+          },
+          {
+            "name": "latitud",
+            "in": "query",
+            "description": "Latitud de la provincia",
+            "required": true,
+            "type": "number",
+            "default": -27
+          },
+          {
+            "name": "longitud",
+            "in": "query",
+            "description": "Longitud de la provincia",
+            "required": true,
+            "type": "number",
+            "default": -56
+          },
+          {
+            "name": "displayorder",
+            "in": "query",
+            "description": "Orden de visualización de la provincia",
+            "required": true,
+            "type": "integer",
+            "default": 13
+          }
+        ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Provincia creada exitosamente"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Error en la solicitud"
           }
         }
       }
     },
     "/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Provinces"
+        ],
+        "summary": "Obtener provincia por ID",
+        "description": "Retorna los datos de una provincia específica",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "ID de la provincia",
             "required": true,
-            "type": "string"
+            "type": "integer"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Provincia encontrada"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Provincia no encontrada"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Error interno del servidor"
           }
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Provinces"
+        ],
+        "summary": "Actualizar una provincia",
+        "description": "Actualiza los datos de una provincia existente",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "ID de la provincia",
             "required": true,
-            "type": "string"
+            "type": "integer"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Datos actualizados de la provincia",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProvinceInput"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Provincia actualizada correctamente"
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Error en la solicitud"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Provincia no encontrada"
           }
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Provinces"
+        ],
+        "summary": "Eliminar una provincia",
+        "description": "Elimina una provincia existente por su ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "ID de la provincia",
             "required": true,
-            "type": "string"
+            "type": "integer"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Provincia eliminada correctamente"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Provincia no encontrada"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Error interno del servidor"
           }
         }
       }
@@ -113,106 +193,69 @@
   "definitions": {
     "Province": {
       "type": "object",
+      "required": [
+        "nombre",
+        "nombrecompleto",
+        "latitud",
+        "longitud",
+        "displayorder"
+      ],
       "properties": {
-        "type": {
+        "id": {
+          "type": "integer",
+          "example": 1
+        },
+        "nombre": {
           "type": "string",
-          "example": "object"
+          "example": "Buenos Aires"
         },
-        "properties": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "integer"
-                },
-                "example": {
-                  "type": "number",
-                  "example": 1
-                }
-              }
-            },
-            "nombre": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "Buenos Aires"
-                }
-              }
-            },
-            "nombrecompleto": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "string"
-                },
-                "example": {
-                  "type": "string",
-                  "example": "Provincia de Buenos Aires"
-                }
-              }
-            },
-            "latitud": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "number"
-                },
-                "example": {
-                  "type": "number",
-                  "example": -34.6037
-                }
-              }
-            },
-            "longitud": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "number"
-                },
-                "example": {
-                  "type": "number",
-                  "example": -58.3816
-                }
-              }
-            },
-            "displayorder": {
-              "type": "object",
-              "properties": {
-                "type": {
-                  "type": "string",
-                  "example": "integer"
-                },
-                "example": {
-                  "type": "number",
-                  "example": 1
-                }
-              }
-            }
-          }
+        "nombrecompleto": {
+          "type": "string",
+          "example": "Provincia de Buenos Aires"
         },
-        "required": {
-          "type": "array",
-          "example": [
-            "nombre",
-            "nombrecompleto",
-            "latitud",
-            "longitud",
-            "displayorder"
-          ],
-          "items": {
-            "type": "string"
-          }
+        "latitud": {
+          "type": "number",
+          "example": -34.6037
+        },
+        "longitud": {
+          "type": "number",
+          "example": -58.3816
+        },
+        "displayorder": {
+          "type": "integer",
+          "example": 1
+        }
+      }
+    },
+    "ProvinceInput": {
+      "type": "object",
+      "required": [
+        "nombre",
+        "nombrecompleto",
+        "latitud",
+        "longitud",
+        "displayorder"
+      ],
+      "properties": {
+        "nombre": {
+          "type": "string",
+          "example": "Misiones"
+        },
+        "nombrecompleto": {
+          "type": "string",
+          "example": "Provincia de Misiones"
+        },
+        "latitud": {
+          "type": "number",
+          "example": -27
+        },
+        "longitud": {
+          "type": "number",
+          "example": -56
+        },
+        "displayorder": {
+          "type": "integer",
+          "example": 13
         }
       }
     }
