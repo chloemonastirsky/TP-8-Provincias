@@ -9,7 +9,7 @@ const swaggerSpec = {
     description: 'API REST para gestionar provincias',
     version: '1.0.0',
   },
-  host: 'localhost:4000',
+  host: 'localhost:5000',
   basePath: '/api/province',
   schemes: ['http'],
   consumes: ['application/json'],

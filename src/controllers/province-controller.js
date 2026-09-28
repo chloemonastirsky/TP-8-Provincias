@@ -90,15 +90,30 @@ router.post("/", async (req, res) => {
     console.log("QUERY:", req.query);
 
     try {
+        const nombre = String(req.body?.nombre ?? req.query?.nombre ?? "").trim();
+        const nombreCompleto = String(req.body?.nombrecompleto ?? req.query?.nombrecompleto ?? "").trim();
+        const latitud = Number(req.body?.latitud ?? req.query?.latitud);
+        const longitud = Number(req.body?.longitud ?? req.query?.longitud);
+        const displayorder = Number(req.body?.displayorder ?? req.query?.displayorder);
+
+        if (!nombre || !nombreCompleto || !Number.isFinite(latitud) || !Number.isFinite(longitud) || !Number.isInteger(displayorder)) {
+            return res.status(400).json({
+                error: "Faltan datos obligatorios o los campos numéricos son inválidos."
+            });
+        }
+
         const payload = {
-            ...req.body,
-            ...req.query,
+            nombre,
+            nombrecompleto: nombreCompleto,
+            latitud,
+            longitud,
+            displayorder,
         };
 
         const result = await service.createAsync(payload);
         res.status(201).json(result);
     } catch (error) {
-        console.error(error);
+        console.error("Error al crear provincia:", error);
         res.status(400).json({ error: error.message || "Error al crear la provincia." });
     }
 });

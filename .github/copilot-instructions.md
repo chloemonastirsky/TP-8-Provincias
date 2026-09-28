@@ -11,7 +11,7 @@
 - The schema source of truth is `database/TP8-DB.sql`. If you change the table structure or seed data, keep the SQL dump in sync.
 - Swagger is generated from JSDoc annotations in the route file. `swagger.js` reads `#swagger.*` comments and writes `swagger-output.json`; run `npm run swagger` after adding or changing endpoints.
 - For runtime use, `npm start` runs `node swagger.js && node index.js`; `npm run dev` does the same with `nodemon`; `npm run swagger` regenerates the OpenAPI file only.
-- The API runs on port `4000` and the hardcoded Swagger host is `localhost:4000` in `swagger.js`.
+- The API runs on port `4000` and the hardcoded Swagger host is `localhost:5000` in `swagger.js`.
 - Preserve the existing Spanish naming and error messages (`Provincia no encontrada`, `Error interno al obtener provincias.`) when editing API responses.
 - When adding new functionality, keep it consistent with the single-resource pattern: one router plus the service/repository pair, not a broad multi-resource structure.
 - There is no centralized validation helper yet (`src/helpers/validaciones-helpers.js` is empty). Prefer small, local validation in the route/service if needed rather than inventing a new abstraction.
